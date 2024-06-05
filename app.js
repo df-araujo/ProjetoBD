@@ -1,9 +1,23 @@
 var express = require("express");
-var path = require('path');
 var app = express();
+
+var path = require('path');
+
+var mysql = require("mysql");
+var con = mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    database: "ProjetoBD"
+})
+con.connect(function(err) {
+    if (err) throw err;
+    console.log("Conectado!");
+});
+
 app.set("engine ejs", "ejs");
 app.use(express.urlencoded({extended: false}));
 app.use(express.static(path.join(__dirname, 'public')));
+
 //rotas...
 app.get("/", function(req, res){
     var nome ="Loja de Cartas Pokémon TCG";
