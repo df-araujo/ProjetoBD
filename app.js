@@ -13,22 +13,25 @@ con.connect(function(err) {
     if (err) throw err;
     console.log("Conectado!");
 });
-
 app.set("engine ejs", "ejs");
 app.use(express.urlencoded({extended: false}));
 app.use(express.static(path.join(__dirname, 'public')));
 
 //rotas...
 app.get("/", function(req, res){
-    var nome ="Loja de Cartas Pokémon TCG";
-    var mascots = [
-        { nome: 'Sammy', empresa: "DigitalOcean", ano: 2012},
-        { nome: 'Tux', empresa: "Linux", ano: 1996},
-        { nome: 'Moby Dock', empresa: "Docker", ano: 2013}
-    ];
-    res.render("index.ejs", {
-        nome: nome,
-        mascots : mascots
+    /*
+    */
+    select = "SELECT * FROM Cartas";    
+    insert = "INSERT INTO Cartas(Nome, Tipo, Raridade, Expansao, Condicao, PrecoCompra, PrecoVenda, QuantidadeEstoque)" +
+            "VALUES ('Nome', 'Tipo', 'Raridade', 'Expansao', 'Condicao', 1.0, 1.0, 1)";
+    var nome = "Loja de Cartas Pokémon TCG";
+    con.query(select, function (err, result, fields) {
+        if (err) throw err;
+        res.render("index.ejs", {
+            nome : nome,
+            con : con,
+            result : result
+        });
     });
 });
 app.listen(3000, () => {

@@ -30,7 +30,12 @@
             <thead>
                 <tr>
                     <th colspan="9" class="button-cell">
-                        <button class="add-button">Adicionar</button>
+                        <button class="add-button", onclick="addCard()">Adicionar</button>
+                        <script>
+                            function addCard() {
+                                
+                            }
+                        </script>
                         <button class="edit-button">Editar</button>
                         <button class="delete-button">Excluir</button>
                     </th>
@@ -48,29 +53,20 @@
                 </tr>
             </thead>
             <tbody>
-                <!-- Linhas com dados das cartas -->
-                <tr>
-                    <td>1</td>
-                    <td>Charizard</td>
-                    <td>Fogo</td>
-                    <td>Rara</td>
-                    <td>Base Set</td>
-                    <td>Novo</td>
-                    <td>150</td>
-                    <td>200</td>
-                    <td>10</td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>Blastoise</td>
-                    <td>Água</td>
-                    <td>Rara</td>
-                    <td>Base Set</td>
-                    <td>Usado</td>
-                    <td>100</td>
-                    <td>150</td>
-                    <td>5</td>
-                </tr>
+                <!-- Linhas com dados das cartas -->  
+                <% result.forEach(function(entry) { %>
+                    <tr>
+                        <td><%= entry.ID %></td>
+                        <td><%= entry.Nome %></td>
+                        <td><%= entry.Tipo %></td>
+                        <td><%= entry.Raridade %></td>
+                        <td><%= entry.Expansao %></td>
+                        <td><%= entry.Condicao %></td>
+                        <td><%= entry.PrecoCompra %></td>
+                        <td><%= entry.PrecoVenda %></td>
+                        <td><%= entry.QuantidadeEstoque %></td>
+                    </tr>
+                    <% }) %>
                 <!-- Adicione mais linhas conforme necessário -->
             </tbody>
         </table>
@@ -211,6 +207,10 @@
         </table>
     </section>
 </div>
+
+<script>
+    window.results = results;
+</script>
 
 </body>
 </html>
