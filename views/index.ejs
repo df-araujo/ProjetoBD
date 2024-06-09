@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loja de Cartas Pokémon TCG</title>
+    <link rel="stylesheet" href="css/index.css">
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Loja de Cartas Pokémon TCG</h1>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#cartas">Cartas</a></li>
+            <li><a href="#clientes">Clientes</a></li>
+            <li><a href="#vendas">Vendas</a></li>
+            <li><a href="#compras">Compras</a></li>
+            <li><a href="#trocas">Trocas</a></li>
+        </ul>
+    </nav>
+
+    <section id="cartas">
+        <h2>Gestão de Cartas</h2>
+        <table>
+            <caption>Cartas no Estoque</caption>
+            <thead>
+                <tr>
+                    <th colspan="9" class="button-cell">
+                        <button class="add-button" onclick="addCard()">Adicionar</button>
+                        <button class="edit-button">Editar</button>
+                        <button class="delete-button">Excluir</button>
+                    </th>
+                </tr>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Tipo</th>
+                    <th>Raridade</th>
+                    <th>Expansão</th>
+                    <th>Condição</th>
+                    <th>Preço de Compra</th>
+                    <th>Preço de Venda</th>
+                    <th>Quantidade</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% if (cartas.length > 0) { %>
+                    <% cartas.forEach(function(entry) { %>
+                    <tr>
+                        <td><%= entry.ID %></td>
+                        <td><%= entry.Nome %></td>
+                        <td><%= entry.Tipo %></td>
+                        <td><%= entry.Raridade %></td>
+                        <td><%= entry.Expansao %></td>
+                        <td><%= entry.Condicao %></td>
+                        <td><%= entry.PrecoCompra %></td>
+                        <td><%= entry.PrecoVenda %></td>
+                        <td><%= entry.QuantidadeEstoque %></td>
+                    </tr>
+                    <% }) %>
+                <% } else { %>
+                    <tr>
+                        <td colspan="9">Nenhuma carta encontrada.</td>
+                    </tr>
+                <% } %>
+            </tbody>
+        </table>
+    </section>
+
+    <section id="clientes">
+        <h2>Gestão de Clientes</h2>
+        <table>
+            <caption>Clientes Registrados</caption>
+            <thead>
+                <tr>
+                    <th colspan="5" class="button-cell">
+                        <button class="add-button">Adicionar</button>
+                        <button class="edit-button">Editar</button>
+                        <button class="delete-button">Excluir</button>
+                    </th>
+                </tr>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Endereço</th>
+                    <th>Telefone</th>
+                    <th>Email</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% if (clientes.length > 0) { %>
+                    <% clientes.forEach(function(entry) { %>
+                    <tr>
+                        <td><%= entry.ID %></td>
+                        <td><%= entry.Nome %></td>
+                        <td><%= entry.Endereco %></td>
+                        <td><%= entry.Telefone %></td>
+                        <td><%= entry.Email %></td>
+                    </tr>
+                    <% }) %>
+                <% } else { %>
+                    <tr>
+                        <td colspan="5">Nenhum cliente encontrado.</td>
+                    </tr>
+                <% } %>
+            </tbody>
+        </table>
+    </section>
+
+    <section id="vendas">
+        <h2>Gestão de Vendas</h2>
+        <table>
+            <caption>Vendas Realizadas</caption>
+            <thead>
+                <tr>
+                    <th colspan="4" class="button-cell">
+                        <button class="add-button">Adicionar</button>
+                        <button class="edit-button">Editar</button>
+                        <button class="delete-button">Excluir</button>
+                    </th>
+                </tr>
+                <tr>
+                    <th>ID</th>
+                    <th>ID do Cliente</th>
+                    <th>Data da Venda</th>
+                    <th>Total da Venda</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% function formatDate(date) { 
+                    var d = new Date(date);
+                    var day = d.getDate();
+                    var month = d.getMonth() + 1; // Months are zero based
+                    var year = d.getFullYear();
+                    return [day, month, year].map(n => n < 10 ? '0' + n : n).join('/');
+                } %>
+                <% if (vendas.length > 0) { %>
+                    <% vendas.forEach(function(entry) { %>
+                    <tr>
+                        <td><%= entry.ID %></td>
+                        <td><%= entry.ClienteID %></td>
+                        <td><%= formatDate(entry.DataVenda) %></td>
+                        <td><%= entry.TotalVenda %></td>
+                    </tr>
+                    <% }) %>
+                <% } else { %>
+                    <tr>
+                        <td colspan="4">Nenhuma venda encontrada.</td>
+                    </tr>
+                <% } %>
+            </tbody>
+        </table>
+    </section>
+
+    <section id="compras">
+        <h2>Gestão de Compras</h2>
+        <table>
+            <caption>Compras Realizadas</caption>
+            <thead>
+                <tr>
+                    <th colspan="4" class="button-cell">
+                        <button class="add-button">Adicionar</button>
+                        <button class="edit-button">Editar</button>
+                        <button class="delete-button">Excluir</button>
+                    </th>
+                </tr>
+                <tr>
+                    <th>ID</th>
+                    <th>ID do Cliente</th>
+                    <th>Data da Compra</th>
+                    <th>Total da Compra</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% if (compras.length > 0) { %>
+                    <% compras.forEach(function(entry) { %>
+                    <tr>
+                        <td><%= entry.ID %></td>
+                        <td><%= entry.ClienteID %></td>
+                        <td><%= formatDate(entry.DataCompra) %></td>
+                        <td><%= entry.TotalCompra %></td>
+                    </tr>
+                    <% }) %>
+                <% } else { %>
+                    <tr>
+                        <td colspan="4">Nenhuma compra encontrada.</td>
+                    </tr>
+                <% } %>
+            </tbody>
+        </table>
+    </section>
+
+    <section id="trocas">
+        <h2>Gestão de Trocas</h2>
+        <table>
+            <caption>Trocas Realizadas</caption>
+            <thead>
+                <tr>
+                    <th colspan="3" class="button-cell">
+                        <button class="add-button">Adicionar</button>
+                        <button class="edit-button">Editar</button>
+                        <button class="delete-button">Excluir</button>
+                    </th>
+                </tr>
+                <tr>
+                    <th>ID</th>
+                    <th>ID do Cliente</th>
+                    <th>Data da Troca</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% if (trocas.length > 0) { %>
+                    <% trocas.forEach(function(entry) { %>
+                    <tr>
+                        <td><%= entry.ID %></td>
+                        <td><%= entry.ClienteID %></td>
+                        <td><%= formatDate(entry.DataTroca) %></td>
+                    </tr>
+                    <% }) %>
+                <% } else { %>
+                    <tr>
+                        <td colspan="3">Nenhuma troca encontrada.</td>
+                    </tr>
+                <% } %>
+            </tbody>
+        </table>
+    </section>
+</div>
+
+<div id="addCardModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('addCardModal')">&times;</span>
+        <h2>Adicionar Carta</h2>
+        <form action="/add-card" method="POST">
+            <label for="nome">Nome:</label>
+            <input type="text" id="nome" name="nome" required><br>
+            <label for="tipo">Tipo:</label>
+            <input type="text" id="tipo" name="tipo" required><br>
+            <label for="raridade">Raridade:</label>
+            <input type="text" id="raridade" name="raridade" required><br>
+            <label for="expansao">Expansão:</label>
+            <input type="text" id="expansao" name="expansao" required><br>
+            <label for="condicao">Condição:</label>
+            <input type="text" id="condicao" name="condicao" required><br>
+            <label for="precoCompra">Preço de Compra:</label>
+            <input type="number" id="precoCompra" name="precoCompra" step="0.01" required><br>
+            <label for="precoVenda">Preço de Venda:</label>
+            <input type="number" id="precoVenda" name="precoVenda" step="0.01" required><br>
+            <label for="quantidadeEstoque">Quantidade:</label>
+            <input type="number" id="quantidadeEstoque" name="quantidadeEstoque" required><br>
+            <button type="submit">Adicionar</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    function addCard() {
+        document.getElementById('addCardModal').style.display = 'block';
+    }
+
+    function closeModal(modalId) {
+        document.getElementById(modalId).style.display = 'none';
+    }
+</script>
+
+</body>
+</html>
