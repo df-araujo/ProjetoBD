@@ -29,13 +29,6 @@
             <caption>Cartas no Estoque</caption>
             <thead>
                 <tr>
-                    <th colspan="9" class="button-cell">
-                        <button class="add-button" onclick="addCard()">Adicionar</button>
-                        <button class="edit-button">Editar</button>
-                        <button class="delete-button">Excluir</button>
-                    </th>
-                </tr>
-                <tr>
                     <th>ID</th>
                     <th>Nome</th>
                     <th>Tipo</th>
@@ -45,6 +38,7 @@
                     <th>Preço de Compra</th>
                     <th>Preço de Venda</th>
                     <th>Quantidade</th>
+                    <th>Ações</th> 
                 </tr>
             </thead>
             <tbody>
@@ -60,15 +54,20 @@
                         <td><%= entry.PrecoCompra %></td>
                         <td><%= entry.PrecoVenda %></td>
                         <td><%= entry.QuantidadeEstoque %></td>
+                        <td>
+                            <button class="edit-button" onclick="openEditModal('<%= entry.ID %>', '<%= entry.Nome %>', '<%= entry.Tipo %>', '<%= entry.Raridade %>', '<%= entry.Expansao %>', '<%= entry.Condicao %>', '<%= entry.PrecoCompra %>', '<%= entry.PrecoVenda %>', '<%= entry.QuantidadeEstoque %>')">Editar</button>
+                            <button class="delete-button" onclick="deleteCard('<%= entry.ID %>')">Excluir</button>
+                        </td>
                     </tr>
                     <% }) %>
                 <% } else { %>
                     <tr>
-                        <td colspan="9">Nenhuma carta encontrada.</td>
+                        <td colspan="10">Nenhuma carta encontrada.</td>
                     </tr>
                 <% } %>
             </tbody>
         </table>
+        <button class="add-button" onclick="addCard()">Adicionar</button> 
     </section>
 
     <section id="clientes">
@@ -77,18 +76,12 @@
             <caption>Clientes Registrados</caption>
             <thead>
                 <tr>
-                    <th colspan="5" class="button-cell">
-                        <button class="add-button">Adicionar</button>
-                        <button class="edit-button">Editar</button>
-                        <button class="delete-button">Excluir</button>
-                    </th>
-                </tr>
-                <tr>
                     <th>ID</th>
                     <th>Nome</th>
                     <th>Endereço</th>
                     <th>Telefone</th>
                     <th>Email</th>
+                    <th>Ações</th> 
                 </tr>
             </thead>
             <tbody>
@@ -100,15 +93,20 @@
                         <td><%= entry.Endereco %></td>
                         <td><%= entry.Telefone %></td>
                         <td><%= entry.Email %></td>
+                        <td>
+                            <button class="edit-button">Editar</button>
+                            <button class="delete-button">Excluir</button>
+                        </td>
                     </tr>
                     <% }) %>
                 <% } else { %>
                     <tr>
-                        <td colspan="5">Nenhum cliente encontrado.</td>
+                        <td colspan="6">Nenhum cliente encontrado.</td>
                     </tr>
                 <% } %>
             </tbody>
         </table>
+        <button class="add-button">Adicionar</button> 
     </section>
 
     <section id="vendas">
@@ -117,17 +115,11 @@
             <caption>Vendas Realizadas</caption>
             <thead>
                 <tr>
-                    <th colspan="4" class="button-cell">
-                        <button class="add-button">Adicionar</button>
-                        <button class="edit-button">Editar</button>
-                        <button class="delete-button">Excluir</button>
-                    </th>
-                </tr>
-                <tr>
                     <th>ID</th>
                     <th>ID do Cliente</th>
                     <th>Data da Venda</th>
                     <th>Total da Venda</th>
+                    <th>Ações</th> 
                 </tr>
             </thead>
             <tbody>
@@ -145,15 +137,20 @@
                         <td><%= entry.ClienteID %></td>
                         <td><%= formatDate(entry.DataVenda) %></td>
                         <td><%= entry.TotalVenda %></td>
+                        <td>
+                            <button class="edit-button">Editar</button>
+                            <button class="delete-button">Excluir</button>
+                        </td>
                     </tr>
                     <% }) %>
                 <% } else { %>
                     <tr>
-                        <td colspan="4">Nenhuma venda encontrada.</td>
+                        <td colspan="5">Nenhuma venda encontrada.</td>
                     </tr>
                 <% } %>
             </tbody>
         </table>
+        <button class="add-button">Adicionar</button> 
     </section>
 
     <section id="compras">
@@ -162,17 +159,11 @@
             <caption>Compras Realizadas</caption>
             <thead>
                 <tr>
-                    <th colspan="4" class="button-cell">
-                        <button class="add-button">Adicionar</button>
-                        <button class="edit-button">Editar</button>
-                        <button class="delete-button">Excluir</button>
-                    </th>
-                </tr>
-                <tr>
                     <th>ID</th>
                     <th>ID do Cliente</th>
                     <th>Data da Compra</th>
                     <th>Total da Compra</th>
+                    <th>Ações</th> 
                 </tr>
             </thead>
             <tbody>
@@ -183,15 +174,20 @@
                         <td><%= entry.ClienteID %></td>
                         <td><%= formatDate(entry.DataCompra) %></td>
                         <td><%= entry.TotalCompra %></td>
+                        <td>
+                            <button class="edit-button">Editar</button>
+                            <button class="delete-button">Excluir</button>
+                        </td>
                     </tr>
                     <% }) %>
                 <% } else { %>
                     <tr>
-                        <td colspan="4">Nenhuma compra encontrada.</td>
+                        <td colspan="5">Nenhuma compra encontrada.</td>
                     </tr>
                 <% } %>
             </tbody>
         </table>
+        <button class="add-button">Adicionar</button> 
     </section>
 
     <section id="trocas">
@@ -200,16 +196,10 @@
             <caption>Trocas Realizadas</caption>
             <thead>
                 <tr>
-                    <th colspan="3" class="button-cell">
-                        <button class="add-button">Adicionar</button>
-                        <button class="edit-button">Editar</button>
-                        <button class="delete-button">Excluir</button>
-                    </th>
-                </tr>
-                <tr>
                     <th>ID</th>
                     <th>ID do Cliente</th>
                     <th>Data da Troca</th>
+                    <th>Ações</th> 
                 </tr>
             </thead>
             <tbody>
@@ -219,69 +209,108 @@
                         <td><%= entry.ID %></td>
                         <td><%= entry.ClienteID %></td>
                         <td><%= formatDate(entry.DataTroca) %></td>
+                        <td>
+                            <button class="edit-button">Editar</button>
+                            <button class="delete-button">Excluir</button>
+                        </td>
                     </tr>
                     <% }) %>
                 <% } else { %>
                     <tr>
-                        <td colspan="3">Nenhuma troca encontrada.</td>
+                        <td colspan="4">Nenhuma troca encontrada.</td>
                     </tr>
                 <% } %>
             </tbody>
         </table>
+        <button class="add-button">Adicionar</button> 
     </section>
-</div>
 
-<div id="addCardModal" class="modal">
-    <div class="modal-content">
-        <span class="close" onclick="closeModal('addCardModal')">&times;</span>
-        <h2>Adicionar Carta</h2>
-        <form action="/add-card" method="POST">
-            <label for="nome">Nome:</label>
-            <input type="text" id="nome" name="nome" required><br>
-            <label for="tipo">Tipo:</label>
-            <select id="tipo" name="tipo">
-                <option value="Normal">Normal</option>
-                <option value="Fogo">Fogo</option>
-                <option value="Água">Água</option>
-                <option value="Elétrico">Elétrico</option>
-                <option value="Grama">Grama</option>
-                <option value="Gelo">Gelo</option>
-                <option value="Lutador">Lutador</option>
-                <option value="Psíquico">Psíquico</option>
-                <option value="Inseto">Inseto</option>
-                <option value="Pedra">Pedra</option>
-                <option value="Fantasma">Fantasma</option>
-                <option value="Dragão">Dragão</option>
-                <option value="Sombrio">Sombrio</option>
-                <option value="Metálico">Metálico</option>
-                <option value="Fada">Fada</option>
-            </select>
-            <label for="raridade">Raridade:</label>
-            <input type="text" id="raridade" name="raridade" required><br>
-            <label for="expansao">Expansão:</label>
-            <input type="text" id="expansao" name="expansao" required><br>
-            <label for="condicao">Condição:</label>
-            <input type="text" id="condicao" name="condicao" required><br>
-            <label for="precoCompra">Preço de Compra:</label>
-            <input type="number" id="precoCompra" name="precoCompra" step="0.01" required><br>
-            <label for="precoVenda">Preço de Venda:</label>
-            <input type="number" id="precoVenda" name="precoVenda" step="0.01" required><br>
-            <label for="quantidadeEstoque">Quantidade:</label>
-            <input type="number" id="quantidadeEstoque" name="quantidadeEstoque" required><br>
-            <button type="submit">Adicionar</button>
-        </form>
+    <!-- Modais para adicionar e editar -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal()">&times;</span>
+            <form id="modal-form" method="post" action="/cartas">
+                <h2 id="modal-title">Adicionar Carta</h2>
+                <input type="hidden" name="id" id="modal-id">
+                <div>
+                    <label for="modal-nome">Nome:</label>
+                    <input type="text" name="nome" id="modal-nome" required>
+                </div>
+                <div>
+                    <label for="modal-tipo">Tipo:</label>
+                    <input type="text" name="tipo" id="modal-tipo" required>
+                </div>
+                <div>
+                    <label for="modal-raridade">Raridade:</label>
+                    <input type="text" name="raridade" id="modal-raridade" required>
+                </div>
+                <div>
+                    <label for="modal-expansao">Expansão:</label>
+                    <input type="text" name="expansao" id="modal-expansao" required>
+                </div>
+                <div>
+                    <label for="modal-condicao">Condição:</label>
+                    <input type="text" name="condicao" id="modal-condicao" required>
+                </div>
+                <div>
+                    <label for="modal-preco-compra">Preço de Compra:</label>
+                    <input type="number" name="preco_compra" id="modal-preco-compra" required>
+                </div>
+                <div>
+                    <label for="modal-preco-venda">Preço de Venda:</label>
+                    <input type="number" name="preco_venda" id="modal-preco-venda" required>
+                </div>
+                <div>
+                    <label for="modal-quantidade">Quantidade:</label>
+                    <input type="number" name="quantidade" id="modal-quantidade" required>
+                </div>
+                <button type="submit">Salvar</button>
+            </form>
+        </div>
     </div>
+
+    <script>
+        function addCard() {
+            document.getElementById("modal-title").innerText = "Adicionar Carta";
+            document.getElementById("modal-id").value = "";
+            document.getElementById("modal-nome").value = "";
+            document.getElementById("modal-tipo").value = "";
+            document.getElementById("modal-raridade").value = "";
+            document.getElementById("modal-expansao").value = "";
+            document.getElementById("modal-condicao").value = "";
+            document.getElementById("modal-preco-compra").value = "";
+            document.getElementById("modal-preco-venda").value = "";
+            document.getElementById("modal-quantidade").value = "";
+            document.getElementById("modal-form").action = "/cartas/add";
+            document.getElementById("modal").style.display = "block";
+        }
+
+        function openEditModal(id, nome, tipo, raridade, expansao, condicao, precoCompra, precoVenda, quantidade) {
+            document.getElementById("modal-title").innerText = "Editar Carta";
+            document.getElementById("modal-id").value = id;
+            document.getElementById("modal-nome").value = nome;
+            document.getElementById("modal-tipo").value = tipo;
+            document.getElementById("modal-raridade").value = raridade;
+            document.getElementById("modal-expansao").value = expansao;
+            document.getElementById("modal-condicao").value = condicao;
+            document.getElementById("modal-preco-compra").value = precoCompra;
+            document.getElementById("modal-preco-venda").value = precoVenda;
+            document.getElementById("modal-quantidade").value = quantidade;
+            document.getElementById("modal-form").action = "/cartas/edit";
+            document.getElementById("modal").style.display = "block";
+        }
+
+        function closeModal() {
+            document.getElementById("modal").style.display = "none";
+        }
+
+        function deleteCard(id) {
+            if (confirm("Tem certeza que deseja excluir esta carta?")) {
+                window.location.href = "/cartas/delete/" + id;
+            }
+        }
+    </script>
 </div>
-
-<script>
-    function addCard() {
-        document.getElementById('addCardModal').style.display = 'block';
-    }
-
-    function closeModal(modalId) {
-        document.getElementById(modalId).style.display = 'none';
-    }
-</script>
 
 </body>
 </html>
