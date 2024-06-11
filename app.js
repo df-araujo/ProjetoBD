@@ -52,10 +52,6 @@ app.get("/", function(req, res){
     });
 });
 
-app.listen(3000, () => {
-    console.log('SERVIDOR ATIVO, ACESSE http://localhost:3000');
-});
-
 app.post("/add-card", function(req, res) {
     var nome = req.body.nome;
     var tipo = req.body.tipo;
@@ -76,3 +72,38 @@ app.post("/add-card", function(req, res) {
     });
 });
 
+app.post("/edit-card", function(req, res) {
+    var id = req.body.id;
+    var nome = req.body.nome;
+    var tipo = req.body.tipo;
+    var raridade = req.body.raridade;
+    var expansao = req.body.expansao;
+    var condicao = req.body.condicao;
+    var precoCompra = req.body.precoCompra;
+    var precoVenda = req.body.precoVenda;
+    var quantidadeEstoque = req.body.quantidadeEstoque;
+
+    var update = `UPDATE Cartas SET Nome=?, Tipo=?, Raridade=?, Expansao=?, Condicao=?, PrecoCompra=?, PrecoVenda=?, QuantidadeEstoque=? WHERE ID=?`;
+
+    con.query(update, [nome, tipo, raridade, expansao, condicao, precoCompra, precoVenda, quantidadeEstoque, id], function (err, result) {
+        if (err) throw err;
+        console.log("1 carta atualizada");
+        res.redirect("/");
+    });
+});
+
+app.delete("/delete-card/:id", function(req, res) {
+    var id = req.params.id;
+
+    var deleteQuery = `DELETE FROM Cartas WHERE ID = ?`;
+
+    con.query(deleteQuery, [id], function (err, result) {
+        if (err) throw err;
+        console.log("1 carta deletada");
+        res.sendStatus(200);
+    });
+});
+
+app.listen(3000, function(){
+    console.log("SERVIDOR ATIVO, ACESSE: http://localhost:3000");
+});
