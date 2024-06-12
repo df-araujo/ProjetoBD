@@ -106,7 +106,7 @@
                 <% } %>
             </tbody>
         </table>
-        <button onclick="addCliente()">Adicionar</button> 
+        <button class="add-button" onclick="addCliente()">Adicionar</button> 
     </section>
 
     <section id="vendas">
@@ -150,7 +150,7 @@
                 <% } %>
             </tbody>
         </table>
-        <button onclick="addVenda()">Adicionar</button>
+        <button class="add-button" onclick="addVenda()">Adicionar</button>
     </section>
 
     <section id="compras">
@@ -187,7 +187,7 @@
                 <% } %>
             </tbody>
         </table>
-        <button onclick="addCompra()">Adicionar</button>
+        <button class="add-button" onclick="addCompra()">Adicionar</button>
     </section>
 
     <section id="trocas">
@@ -222,7 +222,7 @@
                 <% } %>
             </tbody>
         </table>
-        <button onclick="addTroca()">Adicionar</button>
+        <button class="add-button" onclick="addTroca()">Adicionar</button>
     </section>
 
     <!-- Modais para adicionar e editar -->
@@ -401,9 +401,19 @@
 
     function deleteCard(id) {
         if (confirm("Tem certeza que deseja excluir esta carta?")) {
-            window.location.href = "/cartas/delete/" + id;
+            // Cria um formulário dinamicamente
+            var form = document.createElement("form");
+            form.method = "POST";
+            form.action = "/cartas/delete/" + id;
+            
+            // Adiciona o formulário ao body
+            document.body.appendChild(form);
+            
+            // Submete o formulário
+            form.submit();
         }
     }
+
 
 
     function addCliente() {
@@ -431,7 +441,16 @@
     
     function deleteCliente(id) {
         if (confirm("Tem certeza que deseja excluir este cliente?")) {
-            window.location.href = "/clientes/delete/" + id;
+            // Cria um formulário dinamicamente
+            var form = document.createElement("form");
+            form.method = "POST";
+            form.action = "/clientes/delete/" + id;
+            
+            // Adiciona o formulário ao body
+            document.body.appendChild(form);
+            
+            // Submete o formulário
+            form.submit();
         }
     }
 
@@ -457,7 +476,16 @@
         
         function deleteVenda(id) {
             if (confirm("Tem certeza que deseja excluir esta venda?")) {
-                window.location.href = "/vendas/delete/" + id;
+            // Cria um formulário dinamicamente
+            var form = document.createElement("form");
+            form.method = "POST";
+            form.action = "/vendas/delete/" + id;
+            
+            // Adiciona o formulário ao body
+            document.body.appendChild(form);
+            
+            // Submete o formulário
+            form.submit();
         }
     }
 
@@ -483,9 +511,18 @@
 
     function deleteCompra(id) {
         if (confirm("Tem certeza que deseja excluir esta compra?")) {
-            window.location.href = "/compras/delete/" + id;
+            // Cria um formulário dinamicamente
+            var form = document.createElement("form");
+            form.method = "POST";
+            form.action = "/compras/delete/" + id;
+            
+            // Adiciona o formulário ao body
+            document.body.appendChild(form);
+            
+            // Submete o formulário
+            form.submit();
         }
-        }
+    }
         
     function addTroca() {
         document.getElementById("modal-title-trocas").innerText = "Adicionar Troca";
@@ -507,7 +544,16 @@
 
     function deleteTroca(id) {
         if (confirm("Tem certeza que deseja excluir esta troca?")) {
-            window.location.href = "/trocas/delete/" + id;
+            // Cria um formulário dinamicamente
+            var form = document.createElement("form");
+            form.method = "POST";
+            form.action = "/trocas/delete/" + id;
+            
+            // Adiciona o formulário ao body
+            document.body.appendChild(form);
+            
+            // Submete o formulário
+            form.submit();
         }
     }
 
