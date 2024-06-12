@@ -94,8 +94,8 @@
                         <td><%= entry.Telefone %></td>
                         <td><%= entry.Email %></td>
                         <td>
-                            <button class="edit-button">Editar</button>
-                            <button class="delete-button">Excluir</button>
+                            <button class="edit-button" onclick="openEditModalCliente('<%= entry.ID %>', '<%= entry.Nome %>', '<%= entry.Endereco %>', '<%= entry.Telefone %>', '<%= entry.Email %>')">Editar</button>
+                            <button class="delete-button" onclick="deleteCliente('<%= entry.ID %>')">Excluir</button>
                         </td>
                     </tr>
                     <% }) %>
@@ -106,7 +106,7 @@
                 <% } %>
             </tbody>
         </table>
-        <button class="add-button">Adicionar</button> 
+        <button onclick="addCliente()">Adicionar</button> 
     </section>
 
     <section id="vendas">
@@ -138,8 +138,8 @@
                         <td><%= formatDate(entry.DataVenda) %></td>
                         <td><%= entry.TotalVenda %></td>
                         <td>
-                            <button class="edit-button">Editar</button>
-                            <button class="delete-button">Excluir</button>
+                            <button class="edit-button" onclick="openEditModalVenda('<%= entry.ID %>', '<%= entry.ClienteID %>', '<%= entry.DataVenda %>', '<%= entry.TotalVenda %>')">Editar</button>
+                            <button class="delete-button" onclick="deleteVenda('<%= entry.ID %>')">Excluir</button>
                         </td>
                     </tr>
                     <% }) %>
@@ -150,7 +150,7 @@
                 <% } %>
             </tbody>
         </table>
-        <button class="add-button">Adicionar</button> 
+        <button onclick="addVenda()">Adicionar</button>
     </section>
 
     <section id="compras">
@@ -175,8 +175,8 @@
                         <td><%= formatDate(entry.DataCompra) %></td>
                         <td><%= entry.TotalCompra %></td>
                         <td>
-                            <button class="edit-button">Editar</button>
-                            <button class="delete-button">Excluir</button>
+                            <button class="edit-button" onclick="openEditModalCompra('<%= entry.ID %>', '<%= entry.ClienteID %>', '<%= entry.DataCompra %>', '<%= entry.TotalVenda %>')">Editar</button>
+                            <button class="delete-button" onclick="deleteCompra('<%= entry.ID %>')">Excluir</button>
                         </td>
                     </tr>
                     <% }) %>
@@ -187,7 +187,7 @@
                 <% } %>
             </tbody>
         </table>
-        <button class="add-button">Adicionar</button> 
+        <button onclick="addCompra()">Adicionar</button>
     </section>
 
     <section id="trocas">
@@ -210,8 +210,8 @@
                         <td><%= entry.ClienteID %></td>
                         <td><%= formatDate(entry.DataTroca) %></td>
                         <td>
-                            <button class="edit-button">Editar</button>
-                            <button class="delete-button">Excluir</button>
+                            <button class="edit-button" onclick="openEditModalTroca('<%= entry.ID %>', '<%= entry.ClienteID %>', '<%= entry.DataTroca %>')">Editar</button>
+                            <button class="delete-button" onclick="deleteTroca('<%= entry.ID %>')">Excluir</button>
                         </td>
                     </tr>
                     <% }) %>
@@ -222,13 +222,13 @@
                 <% } %>
             </tbody>
         </table>
-        <button class="add-button">Adicionar</button> 
+        <button onclick="addTroca()">Adicionar</button>
     </section>
 
     <!-- Modais para adicionar e editar -->
     <div id="modal" class="modal">
         <div class="modal-content">
-            <span class="close-button" onclick="closeModal()">&times;</span>
+            <span class="close-button" onclick="closeModal('modal')">&times;</span>
             <form id="modal-form" method="post" action="/cartas">
                 <h2 id="modal-title">Adicionar Carta</h2>
                 <input type="hidden" name="id" id="modal-id">
@@ -269,48 +269,252 @@
         </div>
     </div>
 
-    <script>
-        function addCard() {
-            document.getElementById("modal-title").innerText = "Adicionar Carta";
-            document.getElementById("modal-id").value = "";
-            document.getElementById("modal-nome").value = "";
-            document.getElementById("modal-tipo").value = "";
-            document.getElementById("modal-raridade").value = "";
-            document.getElementById("modal-expansao").value = "";
-            document.getElementById("modal-condicao").value = "";
-            document.getElementById("modal-preco-compra").value = "";
-            document.getElementById("modal-preco-venda").value = "";
-            document.getElementById("modal-quantidade").value = "";
-            document.getElementById("modal-form").action = "/cartas/add";
-            document.getElementById("modal").style.display = "block";
-        }
 
-        function openEditModal(id, nome, tipo, raridade, expansao, condicao, precoCompra, precoVenda, quantidade) {
-            document.getElementById("modal-title").innerText = "Editar Carta";
-            document.getElementById("modal-id").value = id;
-            document.getElementById("modal-nome").value = nome;
-            document.getElementById("modal-tipo").value = tipo;
-            document.getElementById("modal-raridade").value = raridade;
-            document.getElementById("modal-expansao").value = expansao;
-            document.getElementById("modal-condicao").value = condicao;
-            document.getElementById("modal-preco-compra").value = precoCompra;
-            document.getElementById("modal-preco-venda").value = precoVenda;
-            document.getElementById("modal-quantidade").value = quantidade;
-            document.getElementById("modal-form").action = "/cartas/edit";
-            document.getElementById("modal").style.display = "block";
-        }
+    <!-- Modal para adicionar e editar Clientes -->
+    <div id="modal-clientes" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal('modal-clientes')">&times;</span>
+            <form id="modal-form-clientes" method="post" action="/clientes">
+                <h2 id="modal-title-clientes">Adicionar Cliente</h2>
+                <input type="hidden" name="id" id="modal-id-clientes">
+                <div>
+                    <label for="modal-nome-clientes">Nome:</label>
+                    <input type="text" name="nome" id="modal-nome-clientes" required>
+                </div>
+                <div>
+                    <label for="modal-endereco-clientes">Endereço:</label>
+                    <input type="text" name="endereco" id="modal-endereco-clientes" required>
+                </div>
+                <div>
+                    <label for="modal-telefone-clientes">Telefone:</label>
+                    <input type="text" name="telefone" id="modal-telefone-clientes" required>
+                </div>
+                <div>
+                    <label for="modal-email-clientes">Email:</label>
+                    <input type="email" name="email" id="modal-email-clientes" required>
+                </div>
+                <button type="submit">Salvar</button>
+            </form>
+        </div>
+    </div>
 
-        function closeModal() {
-            document.getElementById("modal").style.display = "none";
-        }
+    <!-- Modal para adicionar e editar Vendas -->
+    <div id="modal-vendas" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal('modal-vendas')">&times;</span>
+            <form id="modal-form-vendas" method="post" action="/vendas">
+                <h2 id="modal-title-vendas">Adicionar Venda</h2>
+                <input type="hidden" name="id" id="modal-id-vendas">
+                <div>
+                    <label for="modal-clienteid-vendas">ID do Cliente:</label>
+                    <input type="text" name="clienteid" id="modal-clienteid-vendas" required>
+                </div>
+                <div>
+                    <label for="modal-data-vendas">Data da Venda:</label>
+                    <input type="date" name="datavenda" id="modal-data-vendas" required>
+                </div>
+                <div>
+                    <label for="modal-total-vendas">Total da Venda:</label>
+                    <input type="number" name="totalvenda" id="modal-total-vendas" required>
+                </div>
+                <button type="submit">Salvar</button>
+            </form>
+        </div>
+    </div>
 
-        function deleteCard(id) {
-            if (confirm("Tem certeza que deseja excluir esta carta?")) {
-                window.location.href = "/cartas/delete/" + id;
-            }
-        }
-    </script>
+    <!-- Modal para adicionar e editar Compras -->
+    <div id="modal-compras" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal('modal-compras')">&times;</span>
+            <form id="modal-form-compras" method="post" action="/compras">
+                <h2 id="modal-title-compras">Adicionar Compra</h2>
+                <input type="hidden" name="id" id="modal-id-compras">
+                <div>
+                    <label for="modal-clienteid-compras">ID do Cliente:</label>
+                    <input type="text" name="clienteid" id="modal-clienteid-compras" required>
+                </div>
+                <div>
+                    <label for="modal-data-compras">Data da Compra:</label>
+                    <input type="date" name="datacompra" id="modal-data-compras" required>
+                </div>
+                <div>
+                    <label for="modal-total-compras">Total da Compra:</label>
+                    <input type="number" name="totalcompra" id="modal-total-compras" required>
+                </div>
+                <button type="submit">Salvar</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal para adicionar e editar Trocas -->
+    <div id="modal-trocas" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal('modal-trocas')">&times;</span>
+            <form id="modal-form-trocas" method="post" action="/trocas">
+                <h2 id="modal-title-trocas">Adicionar Troca</h2>
+                <input type="hidden" name="id" id="modal-id-trocas">
+                <div>
+                    <label for="modal-clienteid-trocas">ID do Cliente:</label>
+                    <input type="text" name="clienteid" id="modal-clienteid-trocas" required>
+                </div>
+                <div>
+                    <label for="modal-data-trocas">Data da Troca:</label>
+                    <input type="date" name="datatroca" id="modal-data-trocas" required>
+                </div>
+                <button type="submit">Salvar</button>
+            </form>
+        </div>
+    </div>
+
 </div>
+
+<script>
+    function addCard() {
+        document.getElementById("modal-title").innerText = "Adicionar Carta";
+        document.getElementById("modal-id").value = "";
+        document.getElementById("modal-nome").value = "";
+        document.getElementById("modal-tipo").value = "";
+        document.getElementById("modal-raridade").value = "";
+        document.getElementById("modal-expansao").value = "";
+        document.getElementById("modal-condicao").value = "";
+        document.getElementById("modal-preco-compra").value = "";
+        document.getElementById("modal-preco-venda").value = "";
+        document.getElementById("modal-quantidade").value = "";
+        document.getElementById("modal-form").action = "/cartas/add";
+        document.getElementById("modal").style.display = "block";
+    }
+
+    function openEditModal(id, nome, tipo, raridade, expansao, condicao, precoCompra, precoVenda, quantidade) {
+        document.getElementById("modal-title").innerText = "Editar Carta";
+        document.getElementById("modal-id").value = id;
+        document.getElementById("modal-nome").value = nome;
+        document.getElementById("modal-tipo").value = tipo;
+        document.getElementById("modal-raridade").value = raridade;
+        document.getElementById("modal-expansao").value = expansao;
+        document.getElementById("modal-condicao").value = condicao;
+        document.getElementById("modal-preco-compra").value = precoCompra;
+        document.getElementById("modal-preco-venda").value = precoVenda;
+        document.getElementById("modal-quantidade").value = quantidade;
+        document.getElementById("modal-form").action = "/cartas/edit";
+        document.getElementById("modal").style.display = "block";
+    }
+
+    function deleteCard(id) {
+        if (confirm("Tem certeza que deseja excluir esta carta?")) {
+            window.location.href = "/cartas/delete/" + id;
+        }
+    }
+
+
+    function addCliente() {
+        document.getElementById("modal-title-clientes").innerText = "Adicionar Cliente";
+        document.getElementById("modal-id-clientes").value = "";
+        document.getElementById("modal-nome-clientes").value = "";
+        document.getElementById("modal-endereco-clientes").value = "";
+        document.getElementById("modal-telefone-clientes").value = "";
+        document.getElementById("modal-email-clientes").value = "";
+        document.getElementById("modal-form-clientes").action = "/clientes/add";
+        document.getElementById("modal-clientes").style.display = "block";
+    }
+
+    function openEditModalCliente(id, nome, endereco, telefone, email) {
+        document.getElementById("modal-title-clientes").innerText = "Editar Cliente";
+        document.getElementById("modal-id-clientes").value = id;
+        document.getElementById("modal-nome-clientes").value = nome;
+        document.getElementById("modal-endereco-clientes").value = endereco;
+        document.getElementById("modal-telefone-clientes").value = telefone;
+        document.getElementById("modal-email-clientes").value = email;
+        document.getElementById("modal-form-clientes").action = "/clientes/edit";
+        document.getElementById("modal-clientes").style.display = "block";
+    }
+
+    
+    function deleteCliente(id) {
+        if (confirm("Tem certeza que deseja excluir este cliente?")) {
+            window.location.href = "/clientes/delete/" + id;
+        }
+    }
+
+    function addVenda() {
+        document.getElementById("modal-title-vendas").innerText = "Adicionar Venda";
+        document.getElementById("modal-id-vendas").value = "";
+        document.getElementById("modal-clienteid-vendas").value = "";
+        document.getElementById("modal-data-vendas").value = "";
+        document.getElementById("modal-total-vendas").value = "";
+        document.getElementById("modal-form-vendas").action = "/vendas/add";
+        document.getElementById("modal-vendas").style.display = "block";
+    }
+
+    function openEditModalVenda(id, clienteid, datavenda, totalvenda) {
+        document.getElementById("modal-title-vendas").innerText = "Editar Venda";
+        document.getElementById("modal-id-vendas").value = id;
+        document.getElementById("modal-clienteid-vendas").value = clienteid;
+        document.getElementById("modal-data-vendas").value = datavenda;
+        document.getElementById("modal-total-vendas").value = totalvenda;
+        document.getElementById("modal-form-vendas").action = "/vendas/edit";
+        document.getElementById("modal-vendas").style.display = "block";
+        }
+        
+        function deleteVenda(id) {
+            if (confirm("Tem certeza que deseja excluir esta venda?")) {
+                window.location.href = "/vendas/delete/" + id;
+        }
+    }
+
+    function addCompra() {
+        document.getElementById("modal-title-compras").innerText = "Adicionar Compra";
+        document.getElementById("modal-id-compras").value = "";
+        document.getElementById("modal-clienteid-compras").value = "";
+        document.getElementById("modal-data-compras").value = "";
+        document.getElementById("modal-total-compras").value = "";
+        document.getElementById("modal-form-compras").action = "/compras/add";
+        document.getElementById("modal-compras").style.display = "block";
+    }
+
+    function openEditModalCompra(id, clienteid, datacompra, totalcompra) {
+        document.getElementById("modal-title-compras").innerText = "Editar Compra";
+        document.getElementById("modal-id-compras").value = id;
+        document.getElementById("modal-clienteid-compras").value = clienteid;
+        document.getElementById("modal-data-compras").value = datacompra;
+        document.getElementById("modal-total-compras").value = totalcompra;
+        document.getElementById("modal-form-compras").action = "/compras/edit";
+        document.getElementById("modal-compras").style.display = "block";
+    }
+
+    function deleteCompra(id) {
+        if (confirm("Tem certeza que deseja excluir esta compra?")) {
+            window.location.href = "/compras/delete/" + id;
+        }
+        }
+        
+    function addTroca() {
+        document.getElementById("modal-title-trocas").innerText = "Adicionar Troca";
+        document.getElementById("modal-id-trocas").value = "";
+        document.getElementById("modal-clienteid-trocas").value = "";
+        document.getElementById("modal-data-trocas").value = "";
+        document.getElementById("modal-form-trocas").action = "/trocas/add";
+        document.getElementById("modal-trocas").style.display = "block";
+    }
+    
+    function openEditModalTroca(id, clienteid, datatroca) {
+        document.getElementById("modal-title-trocas").innerText = "Editar Troca";
+        document.getElementById("modal-id-trocas").value = id;
+        document.getElementById("modal-clienteid-trocas").value = clienteid;
+        document.getElementById("modal-data-trocas").value = datatroca;
+        document.getElementById("modal-form-trocas").action = "/trocas/edit";
+        document.getElementById("modal-trocas").style.display = "block";
+    }
+
+    function deleteTroca(id) {
+        if (confirm("Tem certeza que deseja excluir esta troca?")) {
+            window.location.href = "/trocas/delete/" + id;
+        }
+    }
+
+    function closeModal(modalId) {
+        document.getElementById(modalId).style.display = "none";
+    }
+</script>
 
 </body>
 </html>
