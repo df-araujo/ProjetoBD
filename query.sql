@@ -35,8 +35,6 @@ CREATE TABLE ItensVenda (
     FOREIGN KEY (CartaID) REFERENCES Cartas(ID)
 );
 
-<<<<<<< HEAD
-=======
 -- Inserção de Cartas
 INSERT INTO Cartas (Nome, Tipo, Raridade, Expansao, Condicao, PrecoCompra, PrecoVenda, QuantidadeEstoque)
 VALUES
@@ -85,7 +83,6 @@ VALUES
 (1, 4, 1);
 
 
->>>>>>> f4316d41b15725826d8a7816ddbde3c480002251
 CREATE TABLE Compras (
     ID INT PRIMARY KEY AUTO_INCREMENT,
     ClienteID INT,
