@@ -10,7 +10,7 @@ var con = mysql.createConnection({
 });
 
 con.connect(function(err) {
-    if (err) throw err;
+    if(err) throw err;
     console.log("Conectado!");
 });
 
@@ -28,15 +28,15 @@ app.get("/", function(req, res){
     var selectTrocas = "SELECT * FROM Trocas";
 
     con.query(selectCartas, function (err, resultCartas) {
-        if (err) throw err;
+        if(err) throw err;
         con.query(selectClientes, function (err, resultClientes) {
-            if (err) throw err;
+            if(err) throw err;
             con.query(selectVendas, function (err, resultVendas) {
-                if (err) throw err;
+                if(err) throw err;
                 con.query(selectCompras, function (err, resultCompras) {
-                    if (err) throw err;
+                    if(err) throw err;
                     con.query(selectTrocas, function (err, resultTrocas) {
-                        if (err) throw err;
+                        if(err) throw err;
                         res.render("index.ejs", {
                             nome: nome,
                             cartas: resultCartas,
@@ -52,7 +52,7 @@ app.get("/", function(req, res){
     });
 });
 
-app.post("/add-card", function(req, res) {
+app.post("/cartas/add", function(req, res) {
     var nome = req.body.nome;
     var tipo = req.body.tipo;
     var raridade = req.body.raridade;
@@ -62,17 +62,17 @@ app.post("/add-card", function(req, res) {
     var precoVenda = req.body.precoVenda;
     var quantidadeEstoque = req.body.quantidadeEstoque;
 
-    var insert = `INSERT INTO Cartas (Nome, Tipo, Raridade, Expansao, Condicao, PrecoCompra, PrecoVenda, QuantidadeEstoque) 
+    var insertQuery = `INSERT INTO Cartas (Nome, Tipo, Raridade, Expansao, Condicao, PrecoCompra, PrecoVenda, QuantidadeEstoque) 
                   VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
 
-    con.query(insert, [nome, tipo, raridade, expansao, condicao, precoCompra, precoVenda, quantidadeEstoque], function (err, result) {
-        if (err) throw err;
+    con.query(insertQuery, [nome, tipo, raridade, expansao, condicao, precoCompra, precoVenda, quantidadeEstoque], function (err, result) {
+        if(err) throw err;
         console.log("1 carta inserida");
         res.redirect("/");
     });
 });
 
-app.post("/edit-card", function(req, res) {
+app.post("/cartas/edit", function(req, res) {
     var id = req.body.id;
     var nome = req.body.nome;
     var tipo = req.body.tipo;
@@ -83,24 +83,25 @@ app.post("/edit-card", function(req, res) {
     var precoVenda = req.body.precoVenda;
     var quantidadeEstoque = req.body.quantidadeEstoque;
 
-    var update = `UPDATE Cartas SET Nome=?, Tipo=?, Raridade=?, Expansao=?, Condicao=?, PrecoCompra=?, PrecoVenda=?, QuantidadeEstoque=? WHERE ID=?`;
+    var updateQuery = `UPDATE Cartas SET Nome=?, Tipo=?, Raridade=?, Expansao=?, Condicao=?, PrecoCompra=?, PrecoVenda=?, QuantidadeEstoque=? WHERE ID=?`;
 
-    con.query(update, [nome, tipo, raridade, expansao, condicao, precoCompra, precoVenda, quantidadeEstoque, id], function (err, result) {
-        if (err) throw err;
+    con.query(updateQuery, [nome, tipo, raridade, expansao, condicao, precoCompra, precoVenda, quantidadeEstoque, id], function (err, result) {
+        if(err) throw err;
         console.log("1 carta atualizada");
         res.redirect("/");
     });
 });
 
-app.delete("/delete-card/:id", function(req, res) {
+app.post("/cartas/delete/:id", function(req, res) {
     var id = req.params.id;
 
     var deleteQuery = `DELETE FROM Cartas WHERE ID = ?`;
 
-    con.query(deleteQuery, [id], function (err, result) {
-        if (err) throw err;
+    con.query(deleteQuery, [id], function(err, result) {
+        if(err) throw err;
         console.log("1 carta deletada");
-        res.sendStatus(200);
+        //res.sendStatus(200);
+        res.redirect("/");
     });
 });
 
